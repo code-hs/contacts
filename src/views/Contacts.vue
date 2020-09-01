@@ -8,13 +8,13 @@
 					class="contacts__item"
 				>
 					{{ contact.name }}
-					<div class="but-remove" />
+					<div class="but-remove" @click.prevent="remove(contact)" />
 				</router-link>
 			</div>
 
 			<AddContact
 				v-show="showAddContact"
-				@create="createContact"
+				@create="handlerCreate"
 				@dismiss="showAddContact = !showAddContact"
 			/>
 
@@ -62,8 +62,27 @@ export default {
 		};
 	},
 	methods: {
-		createContact(newItem) {
+		handlerCreate(newItem) {
+			this.showAddContact = !this.showAddContact;
+			this.contacts.push(newItem);
 			console.log('newItem :>> ', newItem);
+		},
+		remove(contact) {
+			console.log('contact :>> ', contact);
+			const options = {
+				reverse: true,
+				okText: 'Yes',
+				cancelText: 'No',
+			};
+
+			this.$dialog
+				.confirm('Are you sure you want to delete this contact', options)
+				.then(() => {
+					this.contacts = this.contacts.filter(c => c.id !== contact.id);
+				})
+				.catch(() => {
+					console.log('Clicked on cancel');
+				});
 		},
 	},
 };

@@ -41,6 +41,7 @@ export default {
 				phone: this.phone,
 			};
 			this.$emit('create', item);
+			this.resetFields();
 		},
 		dismiss() {
 			this.resetFields();

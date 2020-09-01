@@ -172,3 +172,27 @@ h1.title {
 .fade-leave-active {
 	opacity: 0;
 }
+
+.dg-main-content {
+	background-color: hsl(12deg 12% 17%);
+	border: 1px solid hsl(0deg 0% 100% / 46%);
+	color: hsl(0deg 0% 100% / 82%);
+	border-radius: 2px;
+	max-width: 300px;
+}
+.dg-content-body {
+	border-bottom: 2px solid hsl(207deg 18% 90% / 41%);
+}
+.dg-btn--cancel {
+	color: hsl(0deg 0% 100% / 58%);
+	background-color: hsl(199deg 100% 43% / 0%);
+	border: 1px solid hsl(0deg 0% 50%);
+	border-radius: 2px;
+}
+
+.dg-btn--ok {
+	color: hsl(0deg 0% 0%);
+	background-color: hsl(0deg 0% 100%);
+	border: 1px solid hsl(0deg 0% 50%);
+	border-radius: 2px;
+}
