@@ -12,17 +12,31 @@
 				</router-link>
 			</div>
 
-			<div class="contacts__but-add">
-				<img src="/img/icons/add.svg" alt="" />
-			</div>
+			<AddContact
+				v-show="showAddContact"
+				@create="createContact"
+				@dismiss="showAddContact = !showAddContact"
+			/>
+
+			<button
+				v-show="!showAddContact"
+				class="contacts__but-add"
+				@click="showAddContact = !showAddContact"
+			/>
 		</div>
 	</div>
 </template>
 
 <script>
+import AddContact from '@/components/contacts/AddContact';
+
 export default {
+	components: {
+		AddContact,
+	},
 	data() {
 		return {
+			showAddContact: false,
 			contacts: [
 				{
 					id: 1,
@@ -47,6 +61,11 @@ export default {
 			],
 		};
 	},
+	methods: {
+		createContact(newItem) {
+			console.log('newItem :>> ', newItem);
+		},
+	},
 };
 </script>
 
@@ -68,6 +87,8 @@ export default {
 }
 
 .contacts__but-add {
+	display: block;
+	width: 100%;
 	height: 40px;
 	line-height: 44px;
 	cursor: pointer;
@@ -75,7 +96,10 @@ export default {
 	border-bottom: none;
 	font-weight: bold;
 	font-family: serif;
+	background: url(/img/icons/add.svg) no-repeat center;
 	opacity: 0.3;
+	border: none;
+	outline: none;
 }
 
 .contacts__but-add:hover {
@@ -90,7 +114,7 @@ export default {
 	right: 10px;
 	top: 20px;
 	font-family: inherit;
-	background: url(/img/icons/delete.svg) no-repeat center center / contain;
+	background: url(/img/icons/delete.svg) no-repeat center / contain;
 }
 .contacts__item:hover .but-remove {
 	opacity: 0.2;
