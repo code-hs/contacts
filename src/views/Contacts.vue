@@ -64,11 +64,11 @@ export default {
 	methods: {
 		handlerCreate(newItem) {
 			this.showAddContact = !this.showAddContact;
+			const newId = Math.max(...this.contacts.map(c => c.id)) + 1;
+			newItem.id = newId;
 			this.contacts.push(newItem);
-			console.log('newItem :>> ', newItem);
 		},
 		remove(contact) {
-			console.log('contact :>> ', contact);
 			const options = {
 				reverse: true,
 				okText: 'Yes',
