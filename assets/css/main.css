@@ -152,23 +152,7 @@ body {
 	text-align: center;
 }
 
-.contacts__item {
-	color: hsl(0deg 0% 100%);
-	border-bottom: 1px solid hsl(0deg 0% 100% / 45%);
-	height: 55px;
-	line-height: 55px;
-	cursor: pointer;
-	transition: all 0.5s;
-}
-.contacts__item:last-child {
-	border-bottom: none;
-}
-
-.contacts__item:hover {
-	background: hsl(0deg 0% 0% / 50%);
-}
-
-h1 {
+h1.title {
 	color: hsl(0deg 0% 100%);
 	font-size: 30px;
 	margin: 30px;
