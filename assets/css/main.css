@@ -159,3 +159,16 @@ h1.title {
 	text-align: center;
 	font-family: inherit;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+	position: absolute;
+	width: 100%;
+	transition-duration: 0.3s;
+	transition-property: opacity;
+}
+
+.fade-enter,
+.fade-leave-active {
+	opacity: 0;
+}

@@ -2,27 +2,14 @@
 	<div>
 		<h1 class="title">Contacts</h1>
 		<div class="content contacts">
-			<div class="contacts__list">
-				<div class="contacts__item">
-					Jon Snow
+			<div v-for="contact in contacts" :key="contact.id" class="contacts__list">
+				<router-link
+					:to="{name: 'contact', params: {id: contact.id}}"
+					class="contacts__item"
+				>
+					{{ contact.name }}
 					<div class="but-remove" />
-				</div>
-				<div class="contacts__item">
-					Ella Gray
-					<div class="but-remove" />
-				</div>
-				<div class="contacts__item">
-					Madison Rock
-					<div class="but-remove" />
-				</div>
-				<div class="contacts__item">
-					Grayson Carter
-					<div class="but-remove" />
-				</div>
-				<div class="contacts__item">
-					Kinsley Clarke
-					<div class="but-remove" />
-				</div>
+				</router-link>
 			</div>
 
 			<div class="contacts__but-add">
@@ -33,11 +20,39 @@
 </template>
 
 <script>
-export default {};
+export default {
+	data() {
+		return {
+			contacts: [
+				{
+					id: 1,
+					name: 'Jon Snow',
+				},
+				{
+					id: 2,
+					name: 'Ella Gray',
+				},
+				{
+					id: 3,
+					name: 'Madison Rock',
+				},
+				{
+					id: 4,
+					name: 'Grayson Carter',
+				},
+				{
+					id: 5,
+					name: 'Kinsley Clarke',
+				},
+			],
+		};
+	},
+};
 </script>
 
 <style scoped>
 .contacts__item {
+	display: block;
 	position: relative;
 	color: hsl(0deg 0% 100%);
 	border-bottom: 1px solid hsl(0deg 0% 100% / 45%);
@@ -45,6 +60,7 @@ export default {};
 	line-height: 55px;
 	cursor: pointer;
 	transition: all 0.5s;
+	text-decoration: none;
 }
 
 .contacts__item:hover {
