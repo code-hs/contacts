@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import {mapGetters, mapMutations} from 'vuex';
+import types from '../store/types';
 import AddContact from '@/components/contacts/AddContact';
 
 export default {
@@ -37,36 +39,19 @@ export default {
 	data() {
 		return {
 			showAddContact: false,
-			contacts: [
-				{
-					id: 1,
-					name: 'Jon Snow',
-				},
-				{
-					id: 2,
-					name: 'Ella Gray',
-				},
-				{
-					id: 3,
-					name: 'Madison Rock',
-				},
-				{
-					id: 4,
-					name: 'Grayson Carter',
-				},
-				{
-					id: 5,
-					name: 'Kinsley Clarke',
-				},
-			],
 		};
 	},
+	computed: {
+		...mapGetters({contacts: types.CONTACTS_CONTACTS}),
+	},
 	methods: {
+		...mapMutations({
+			sCreate: types.CONTACTS_CREATE,
+			sDelete: types.CONTACTS_DELETE,
+		}),
 		handlerCreate(newItem) {
+			this.sCreate(newItem);
 			this.showAddContact = !this.showAddContact;
-			const newId = Math.max(...this.contacts.map(c => c.id)) + 1;
-			newItem.id = newId;
-			this.contacts.push(newItem);
 		},
 		remove(contact) {
 			const options = {
@@ -78,7 +63,7 @@ export default {
 			this.$dialog
 				.confirm('Are you sure you want to delete this contact', options)
 				.then(() => {
-					this.contacts = this.contacts.filter(c => c.id !== contact.id);
+					this.sDelete(contact.id);
 				})
 				.catch(() => {
 					console.log('Clicked on cancel');
