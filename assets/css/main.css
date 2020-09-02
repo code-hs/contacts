@@ -143,8 +143,8 @@ body {
 
 .content {
 	position: relative;
-	width: 400px;
-	left: calc(50% - 200px);
+	width: 600px;
+	left: calc(50% - 300px);
 	border-radius: 2px;
 	overflow: hidden;
 	background: hsl(0deg 0% 0% / 29%);

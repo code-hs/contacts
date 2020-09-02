@@ -1,6 +1,6 @@
 <template>
 	<div class="buttons">
-		<router-link to="/" class="back"> </router-link>
+		<router-link to="/" class="back" />
 	</div>
 </template>
 
@@ -11,12 +11,12 @@ export default {};
 <style>
 .buttons {
 	display: flex;
+	height: 40px;
 }
 .buttons .back {
 	background: url(/img/icons/back.svg) no-repeat center;
 	cursor: pointer;
-	width: 30%;
-	height: 20px;
-	background-size: contain;
+	width: 33%;
+	height: 100%;
 }
 </style>

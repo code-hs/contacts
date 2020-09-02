@@ -7,7 +7,7 @@
 					:to="{name: 'contact', params: {id: contact.id}}"
 					class="contacts__item"
 				>
-					{{ contact.name }}
+					{{ getValueByKey(contact, 'name').value }}
 					<div class="but-remove" @click.prevent="remove(contact)" />
 				</router-link>
 			</div>
@@ -52,6 +52,9 @@ export default {
 		handlerCreate(newItem) {
 			this.sCreate(newItem);
 			this.showAddContact = !this.showAddContact;
+		},
+		getValueByKey(contact, key) {
+			return contact.fields.find(f => f.name === key);
 		},
 		remove(contact) {
 			const options = {
