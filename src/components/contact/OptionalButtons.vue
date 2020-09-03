@@ -96,4 +96,16 @@ export default {
 .but-reset:hover {
 	opacity: 1;
 }
+
+@media only screen and (max-width: 600px) {
+	.but-edit {
+		opacity: 0.3;
+	}
+	.but-remove {
+		opacity: 0.3;
+	}
+	.but-reset {
+		opacity: 0.3;
+	}
+}
 </style>

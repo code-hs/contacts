@@ -145,4 +145,10 @@ export default {
 .contacts-item .but-remove:hover {
 	opacity: 1;
 }
+
+@media only screen and (max-width: 600px) {
+	.but-remove {
+		opacity: 0.2;
+	}
+}
 </style>

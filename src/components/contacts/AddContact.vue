@@ -132,4 +132,13 @@ h1 {
 	opacity: 1;
 	background-color: hsl(0deg 100% 65% / 35%);
 }
+
+@media only screen and (max-width: 600px) {
+	.form-container {
+		margin: 0px 0px;
+	}
+	.form-group input {
+		min-width: 200px;
+	}
+}
 </style>

@@ -197,4 +197,13 @@ export default {
 	padding-left: 7px;
 	box-sizing: border-box;
 }
+
+@media only screen and (max-width: 600px) {
+	.info-key {
+		min-width: 30%;
+	}
+	.contact-info input {
+		min-width: 70%;
+	}
+}
 </style>
