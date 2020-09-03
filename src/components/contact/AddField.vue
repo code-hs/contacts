@@ -1,20 +1,10 @@
 <template>
 	<form @submit.prevent="submit">
-		<h1>Add new contact</h1>
+		<h1>Add new field</h1>
 		<div class="form-container">
 			<div class="form-group">
-				<label>Name</label>
-				<input v-model="name" type="text" required />
-			</div>
-
-			<div class="form-group">
-				<label>Email</label>
-				<input v-model="email" type="email" required />
-			</div>
-
-			<div class="form-group">
-				<label>Phone</label>
-				<input v-model="phone" type="text" required />
+				<label>name:value</label>
+				<input v-model="field" type="text" required />
 			</div>
 		</div>
 
@@ -29,19 +19,15 @@
 export default {
 	data() {
 		return {
-			name: '',
-			email: '',
-			phone: '',
+			field: '',
 		};
 	},
 	methods: {
 		submit() {
-			const item = {
-				name: this.name,
-				email: this.email,
-				phone: this.phone,
-			};
-			this.$emit('create', item);
+			const field = this.field.split(':');
+			if (field.length !== 2) return false;
+
+			this.$emit('create-field', field);
 			this.resetFields();
 		},
 		dismiss() {
@@ -49,9 +35,7 @@ export default {
 			this.$emit('dismiss');
 		},
 		resetFields() {
-			this.name = '';
-			this.email = '';
-			this.phone = '';
+			this.field = '';
 		},
 	},
 };
@@ -104,7 +88,7 @@ h1 {
 	justify-content: space-around;
 	height: 40px;
 	align-items: center;
-	border-top: 1px solid hsl(0deg 0% 100% / 39%);
+	border-top: 1px solid hsl(0deg 0% 100% /39%);
 }
 
 .buttons button {

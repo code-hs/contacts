@@ -11,11 +11,12 @@
 				/>
 
 				<OptionalButtons
-					:i="i"
+					:fieldIndex="i"
 					:editingFieldIndex="editingFieldIndex"
 					:fieldValue="field.value"
 					:required="field.required"
 					:resetValue="resetValue"
+					:showAddField="showAddField"
 					@edit="edit(i)"
 					@remove="remove(i)"
 					@save="save"
@@ -23,7 +24,16 @@
 				/>
 			</div>
 
-			<Buttons />
+			<Buttons
+				v-show="!showAddField"
+				@add-field="showAddField = !showAddField"
+				@reset-last-change="resetLastChange"
+			/>
+			<AddField
+				v-show="showAddField"
+				@dismiss="showAddField = false"
+				@create-field="createField"
+			/>
 		</div>
 	</div>
 </template>
@@ -33,18 +43,21 @@ import {mapGetters, mapMutations} from 'vuex';
 import types from '../store/types';
 import Buttons from '@/components/contact/Buttons';
 import OptionalButtons from '@/components/contact/OptionalButtons';
+import AddField from '@/components/contact/AddField';
 import Config from '@/config/main';
 
 export default {
 	components: {
 		Buttons,
 		OptionalButtons,
+		AddField,
 	},
 	data() {
 		return {
 			contact: null,
 			editingFieldIndex: '',
 			resetValue: '',
+			showAddField: false,
 		};
 	},
 	computed: {
@@ -107,7 +120,17 @@ export default {
 				})
 				.catch();
 			this.clearEditIndex();
-
+		},
+		createField(field) {
+			const pField = {
+				name: field[0],
+				value: field[1],
+			};
+			this.contact.fields.push(pField);
+			this.save();
+		},
+		resetLastChange() {
+			console.log('reset last change');
 			// храним последнее измененное поле, позицию и значение
 			// при добавлении нового поля, записываем его реактивно в
 			// реактивно записываем его через contacts.fields = current fields+
@@ -136,7 +159,7 @@ export default {
 	min-width: 35%;
 	text-align: right;
 	text-transform: capitalize;
-	letter-spacing: 1.2px;
+	letter-spacing: 1.5px;
 	opacity: 0.7;
 }
 

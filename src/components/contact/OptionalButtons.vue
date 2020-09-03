@@ -1,21 +1,21 @@
 <template>
 	<div>
-		<div v-show="i !== editingFieldIndex">
-			<div class="but-edit" @click="$emit('edit', i)" title="edit" />
+		<div v-show="fieldIndex !== editingFieldIndex">
+			<div class="but-edit" @click="$emit('edit', fieldIndex)" title="edit" />
 			<div
 				v-if="!required"
 				class="but-remove"
-				@click="$emit('remove', i)"
+				@click="$emit('remove', fieldIndex)"
 				title="remove"
 			/>
 		</div>
 
-		<div v-show="i === editingFieldIndex">
+		<div v-show="fieldIndex === editingFieldIndex">
 			<div class="but-ok" @click="$emit('save')" title="save" />
 			<div
 				v-show="fieldValue !== resetValue"
 				class="but-reset"
-				@click="$emit('reset', i)"
+				@click="$emit('reset', fieldIndex)"
 				title="reset"
 			/>
 		</div>
@@ -24,7 +24,14 @@
 
 <script>
 export default {
-	props: ['i', 'editingFieldIndex', 'fieldValue', 'resetValue', 'required'],
+	props: [
+		'fieldIndex',
+		'editingFieldIndex',
+		'fieldValue',
+		'resetValue',
+		'required',
+		'showAddField',
+	],
 };
 </script>
 
