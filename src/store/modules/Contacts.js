@@ -8,12 +8,12 @@ const state = {
 				{
 					name: 'name',
 					value: 'Jon Snow',
-					editing: false,
+					required: true,
 				},
 				{
 					name: 'email',
 					value: 'jon-snow@gmail.com',
-					editing: false,
+					required: false,
 				},
 			],
 		},
@@ -23,12 +23,12 @@ const state = {
 				{
 					name: 'name',
 					value: 'Ella Gray',
-					editing: false,
+					required: true,
 				},
 				{
 					name: 'email',
 					value: 'ella-gray@gmail.com',
-					editing: false,
+					required: false,
 				},
 			],
 		},
@@ -38,28 +38,27 @@ const state = {
 				{
 					name: 'name',
 					value: 'Madison Rock',
-					editing: false,
+					required: true,
 				},
 				{
 					name: 'email',
 					value: 'madison-rock@gmail.com',
-					editing: false,
+					required: false,
 				},
 			],
 		},
 		{
 			id: 4,
-
 			fields: [
 				{
 					name: 'name',
 					value: 'Grayson Carter',
-					editing: false,
+					required: true,
 				},
 				{
 					name: 'email',
 					value: 'grayson-carter@gmail.com',
-					editing: false,
+					required: false,
 				},
 			],
 		},
@@ -69,12 +68,11 @@ const state = {
 				{
 					name: 'name',
 					value: 'Kinsley Clarke',
-					editing: false,
+					required: true,
 				},
 				{
 					name: 'email',
 					value: 'kinsley-clarke@gmail.com',
-					editing: false,
 				},
 			],
 		},

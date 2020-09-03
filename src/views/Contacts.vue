@@ -31,6 +31,7 @@
 import {mapGetters, mapMutations} from 'vuex';
 import types from '../store/types';
 import AddContact from '@/components/contacts/AddContact';
+import Config from '@/config/main';
 
 export default {
 	components: {
@@ -57,14 +58,11 @@ export default {
 			return contact.fields.find(f => f.name === key);
 		},
 		remove(contact) {
-			const options = {
-				reverse: true,
-				okText: 'Yes',
-				cancelText: 'No',
-			};
-
 			this.$dialog
-				.confirm('Are you sure you want to delete this contact', options)
+				.confirm(
+					'Are you sure you want to delete this contact',
+					Config.confirmModal
+				)
 				.then(() => {
 					this.sDelete(contact.id);
 				})

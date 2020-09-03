@@ -2,26 +2,25 @@
 	<div>
 		<h1 class="title">{{ contact.name }}</h1>
 		<div class="content contact">
-			<div
-				v-for="(field, key) in contact.fields"
-				:key="key"
-				class="contact-info"
-			>
+			<div v-for="(field, i) in contact.fields" :key="i" class="contact-info">
 				<div class="info-key">{{ field.name }}:</div>
 				<input
 					v-model="field.value"
-					:ref="'field_' + key"
-					:disabled="!field.editing"
+					:ref="'field_' + i"
+					:disabled="i !== editingFieldIndex"
 				/>
 
-				<div v-show="!field.editing">
-					<div class="but-edit" @click="editField(key)" />
-					<div class="but-remove" @click="removeField(field.name)" />
-				</div>
-				<div v-show="field.editing">
-					<div class="but-ok" @click="saveField(key)" />
-					<div class="but-reset" @click="resetField(key)" />
-				</div>
+				<OptionalButtons
+					:i="i"
+					:editingFieldIndex="editingFieldIndex"
+					:fieldValue="field.value"
+					:required="field.required"
+					:resetValue="resetValue"
+					@edit="edit(i)"
+					@remove="remove(i)"
+					@save="save"
+					@reset="reset(i)"
+				/>
 			</div>
 
 			<Buttons />
@@ -33,53 +32,78 @@
 import {mapGetters, mapMutations} from 'vuex';
 import types from '../store/types';
 import Buttons from '@/components/contact/Buttons';
+import OptionalButtons from '@/components/contact/OptionalButtons';
+import Config from '@/config/main';
 
 export default {
 	components: {
 		Buttons,
+		OptionalButtons,
 	},
 	data() {
 		return {
 			contact: null,
+			editingFieldIndex: '',
+			resetValue: '',
 		};
 	},
 	computed: {
 		...mapGetters({contacts: types.CONTACTS_CONTACTS}),
 	},
 	created() {
+		// check url param
 		const id = +this.$route.params.id;
 		const isNumber = /^\d+$/.test(id);
 		if (!id || !isNumber) this.$router.push('/');
 
+		// check contact
 		const contact = this.contacts.find(c => c.id === id);
 		if (!contact) this.$router.push('/');
-		this.contact = contact;
+
+		// using native JSON functions removes reactivity
+		this.contact = JSON.parse(JSON.stringify(contact));
 	},
 	methods: {
 		...mapMutations({
 			sSaveContact: types.CONTACTS_SAVE,
 		}),
-		editField(key) {
-			this.clearEditFields();
-			this.contact.fields[key].editing = true;
+		edit(index) {
+			// set new editing index
+			this.editingFieldIndex = index;
+			// copy value for reset functional
+			this.resetValue = this.contact.fields[index].value;
+
 			this.$nextTick(() => {
-				this.$refs[`field_${key}`][0].focus();
+				// set focus on editing input, for next tick
+				this.$refs[`field_${index}`][0].focus();
 			});
 		},
-		removeField(key) {
-			console.log('key :>> ', key);
+		remove(index) {
+			console.log('index :>> ', index);
 		},
-		saveField(key) {
-			this.contact.fields[key].editing = false;
+		save() {
 			this.sSaveContact(this.contact);
+			this.clearEditIndex();
 		},
-		clearEditFields() {
-			this.contact.fields.forEach(item => {
-				item.editing = false;
-			});
+		clearEditIndex() {
+			this.editingFieldIndex = null;
 		},
-		resetField(key) {
-			console.log('key :>> ', key);
+		reset(index) {
+			this.$dialog
+				.confirm('Are you sure you want to reset', Config.confirmModal)
+				.then(() => {
+					this.contact.fields[index].value = this.resetValue;
+				})
+				.catch(() => {
+					console.log('Clicked on cancel');
+				});
+			this.clearEditIndex();
+
+			// храним последнее измененное поле, позицию и значение
+			// при добавлении нового поля, записываем его реактивно в
+			// реактивно записываем его через contacts.fields = current fields+
+
+			// main reset, при каждом действии, сохраняем весь контакт, а потом при клике на кнопку, востанавливаем его
 		},
 	},
 };
@@ -121,56 +145,5 @@ export default {
 	color: hsl(0deg 0% 100%);
 	padding-left: 7px;
 	box-sizing: border-box;
-}
-
-.but-edit {
-	opacity: 0;
-	position: absolute;
-	width: 17px;
-	height: 17px;
-	right: 29px;
-	top: 11px;
-	font-family: inherit;
-	background: url(/img/icons/edit.svg) no-repeat center / contain;
-	cursor: pointer;
-}
-.contact-info:hover .but-edit {
-	opacity: 0.5;
-}
-.contact-info .but-edit:hover {
-	opacity: 1;
-}
-
-.but-remove {
-	opacity: 0;
-	position: absolute;
-	width: 15px;
-	height: 15px;
-	right: 4px;
-	top: 13px;
-	font-family: inherit;
-	background: url(/img/icons/delete.svg) no-repeat center / contain;
-	cursor: pointer;
-}
-.contact-info:hover .but-remove {
-	opacity: 0.4;
-}
-.contact-info .but-remove:hover {
-	opacity: 1;
-}
-
-.but-ok {
-	opacity: 0.8;
-	position: absolute;
-	width: 15px;
-	height: 15px;
-	right: 29px;
-	top: 13px;
-	font-family: inherit;
-	background: url(/img/icons/ok.svg) no-repeat center / contain;
-	cursor: pointer;
-}
-.but-ok:hover {
-	opacity: 1;
 }
 </style>
