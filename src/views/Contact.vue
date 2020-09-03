@@ -17,10 +17,10 @@
 					:required="field.required"
 					:resetValue="resetValue"
 					:showAddField="showAddField"
-					@edit="edit(i)"
-					@remove="remove(i)"
+					@edit="handleEdit(i)"
+					@remove="handleRemove(i)"
 					@save="save"
-					@reset="reset(i)"
+					@reset="handleResetField(i)"
 				/>
 			</div>
 
@@ -28,12 +28,12 @@
 				v-show="!showAddField"
 				:showResetButton="showResetButton"
 				@add-field="showAddField = !showAddField"
-				@reset-last-change="resetLastChange"
+				@reset-last-change="handleResetLastChange"
 			/>
 			<AddField
 				v-show="showAddField"
 				@dismiss="showAddField = false"
-				@create-field="createField"
+				@create-field="handleCreateField"
 			/>
 		</div>
 	</div>
@@ -88,7 +88,7 @@ export default {
 		...mapMutations({
 			sSaveContact: types.CONTACTS_SAVE,
 		}),
-		edit(index) {
+		handleEdit(index) {
 			// copy contact before some changes
 			this.copyContactToMemory();
 			// set new editing index
@@ -101,7 +101,7 @@ export default {
 				this.$refs[`field_${index}`][0].focus();
 			});
 		},
-		remove(index) {
+		handleRemove(index) {
 			// if empty field or field required
 			if (!this.contact.fields[index] || this.contact.fields[index].required)
 				return false;
@@ -117,23 +117,16 @@ export default {
 				})
 				.catch();
 		},
-		save() {
-			this.sSaveContact(this.contact);
-			this.clearEditIndex();
-		},
-		clearEditIndex() {
-			this.editingFieldIndex = null;
-		},
-		reset(index) {
+		handleResetField(index) {
 			this.$dialog
 				.confirm('Are you sure you want to reset ?', Config.confirmModal)
 				.then(() => {
 					this.contact.fields[index].value = this.resetValue;
 				})
-				.catch();
+				.catch(() => {});
 			this.clearEditIndex();
 		},
-		createField(field) {
+		handleCreateField(field) {
 			// copy contact before changes
 			this.copyContactToMemory();
 
@@ -144,17 +137,24 @@ export default {
 			this.contact.fields.push(pField);
 			this.save();
 		},
-		copyContactToMemory() {
-			// copy without reactivity
-			this.resetContact = JSON.parse(JSON.stringify(this.contact));
-		},
-		resetLastChange() {
+		handleResetLastChange() {
 			if (!this.resetContact) return false;
 
 			this.contact = this.resetContact;
 			// clear memory
 			this.resetContact = false;
 			this.save();
+		},
+		save() {
+			this.sSaveContact(this.contact);
+			this.clearEditIndex();
+		},
+		clearEditIndex() {
+			this.editingFieldIndex = null;
+		},
+		copyContactToMemory() {
+			// copy without reactivity
+			this.resetContact = JSON.parse(JSON.stringify(this.contact));
 		},
 	},
 };

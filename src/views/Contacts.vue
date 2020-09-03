@@ -2,10 +2,10 @@
 	<div>
 		<h1 class="title">Contacts</h1>
 		<div class="content contacts">
-			<div v-for="contact in contacts" :key="contact.id" class="contacts__list">
+			<div v-for="contact in contacts" :key="contact.id">
 				<router-link
 					:to="{name: 'contact', params: {id: contact.id}}"
-					class="contacts__item"
+					class="contacts-item"
 				>
 					{{ getValueByKey(contact, 'name').value }}
 					<div class="but-remove" @click.prevent="remove(contact)" />
@@ -20,7 +20,7 @@
 
 			<button
 				v-show="!showAddContact"
-				class="contacts__but-add"
+				class="but-add"
 				@click="showAddContact = !showAddContact"
 			/>
 		</div>
@@ -51,7 +51,27 @@ export default {
 			sDelete: types.CONTACTS_DELETE,
 		}),
 		handlerCreate(newItem) {
-			this.sCreate(newItem);
+			console.log('newItem :>> ', newItem);
+			// create new item by template
+			const pContact = {
+				fields: [
+					{
+						name: 'name',
+						value: newItem.name,
+						required: true,
+					},
+					{
+						name: 'email',
+						value: newItem.email,
+					},
+					{
+						name: 'phone',
+						value: newItem.phone,
+					},
+				],
+			};
+			this.sCreate(pContact);
+			// hide creating form
 			this.showAddContact = !this.showAddContact;
 		},
 		getValueByKey(contact, key) {
@@ -66,16 +86,14 @@ export default {
 				.then(() => {
 					this.sDelete(contact.id);
 				})
-				.catch(() => {
-					console.log('Clicked on cancel');
-				});
+				.catch(() => {});
 		},
 	},
 };
 </script>
 
 <style scoped>
-.contacts__item {
+.contacts-item {
 	display: block;
 	position: relative;
 	color: hsl(0deg 0% 100%);
@@ -87,11 +105,11 @@ export default {
 	text-decoration: none;
 }
 
-.contacts__item:hover {
+.contacts-item:hover {
 	background: hsl(0deg 0% 0% / 50%);
 }
 
-.contacts__but-add {
+.but-add {
 	display: block;
 	width: 100%;
 	height: 40px;
@@ -107,13 +125,13 @@ export default {
 	outline: none;
 }
 
-.contacts__but-add:hover {
+.but-add:hover {
 	opacity: 1;
 }
 
 .but-remove {
-	opacity: 0;
 	position: absolute;
+	opacity: 0;
 	width: 15px;
 	height: 15px;
 	right: 10px;
@@ -121,10 +139,10 @@ export default {
 	font-family: inherit;
 	background: url(/img/icons/delete.svg) no-repeat center / contain;
 }
-.contacts__item:hover .but-remove {
+.contacts-item:hover .but-remove {
 	opacity: 0.2;
 }
-.contacts__item .but-remove:hover {
+.contacts-item .but-remove:hover {
 	opacity: 1;
 }
 </style>

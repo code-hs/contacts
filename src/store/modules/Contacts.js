@@ -14,6 +14,10 @@ const state = {
 					name: 'email',
 					value: 'jon-snow@gmail.com',
 				},
+				{
+					name: 'phone',
+					value: '111111111111',
+				},
 			],
 		},
 		{
@@ -27,6 +31,10 @@ const state = {
 				{
 					name: 'email',
 					value: 'ella-gray@gmail.com',
+				},
+				{
+					name: 'phone',
+					value: '222222222',
 				},
 			],
 		},
@@ -42,6 +50,10 @@ const state = {
 					name: 'email',
 					value: 'madison-rock@gmail.com',
 				},
+				{
+					name: 'phone',
+					value: '333333333333',
+				},
 			],
 		},
 		{
@@ -56,6 +68,10 @@ const state = {
 					name: 'email',
 					value: 'grayson-carter@gmail.com',
 				},
+				{
+					name: 'phone',
+					value: '44444444444',
+				},
 			],
 		},
 		{
@@ -69,6 +85,10 @@ const state = {
 				{
 					name: 'email',
 					value: 'kinsley-clarke@gmail.com',
+				},
+				{
+					name: 'phone',
+					value: '55555555555',
 				},
 			],
 		},

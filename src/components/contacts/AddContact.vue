@@ -59,11 +59,11 @@ export default {
 
 <style scoped>
 h1 {
+	margin-top: 30px;
+	margin-bottom: 30px;
 	color: hsl(0deg 0% 100% / 75%);
 	letter-spacing: 0.7px;
-	margin-top: 30px;
 	font-size: 18px;
-	margin-bottom: 30px;
 }
 .form-container {
 	margin: 0px 40px;
@@ -71,27 +71,27 @@ h1 {
 
 .form-group {
 	display: flex;
-	justify-content: center;
 	margin: 16px 10px;
 	height: 26px;
+	justify-content: center;
 }
 
 .form-group label {
-	color: hsl(0deg 0% 100%);
+	width: 20%;
 	margin-right: 30px;
+	color: hsl(0deg 0% 100%);
 	line-height: 26px;
 	font-size: 14px;
 	letter-spacing: 1.5px;
-	width: 30%;
 	text-align: right;
 }
 
 .form-group input {
+	padding: 0px 6px;
 	background: hsl(0deg 0% 0% / 0%);
 	border: 1px solid hsl(0deg 0% 100% / 46%);
-	min-width: 210px;
+	min-width: 300px;
 	color: hsl(0deg 0% 100%);
-	padding: 0px 6px;
 	box-sizing: border-box;
 }
 
@@ -123,13 +123,13 @@ h1 {
 }
 
 .buttons .dismiss {
+	opacity: 0.5;
 	background: url(/img/icons/delete.svg) no-repeat center / contain;
 	background-size: 17px 17px;
-	opacity: 0.5;
 	cursor: not-allowed;
 }
 .buttons .dismiss:hover {
-	background-color: hsl(0deg 100% 65% / 35%);
 	opacity: 1;
+	background-color: hsl(0deg 100% 65% / 35%);
 }
 </style>
