@@ -26,6 +26,7 @@
 
 			<Buttons
 				v-show="!showAddField"
+				:showResetButton="showResetButton"
 				@add-field="showAddField = !showAddField"
 				@reset-last-change="resetLastChange"
 			/>
@@ -56,12 +57,19 @@ export default {
 		return {
 			contact: null,
 			editingFieldIndex: '',
-			resetValue: '',
 			showAddField: false,
+			resetValue: '',
+			resetContact: null,
 		};
 	},
 	computed: {
 		...mapGetters({contacts: types.CONTACTS_CONTACTS}),
+		showResetButton() {
+			// if has memory contact and not equal
+			if (!this.resetContact) return false;
+
+			return JSON.stringify(this.contact) !== JSON.stringify(this.resetContact);
+		},
 	},
 	created() {
 		// check url param
@@ -81,6 +89,8 @@ export default {
 			sSaveContact: types.CONTACTS_SAVE,
 		}),
 		edit(index) {
+			// copy contact before some changes
+			this.copyContactToMemory();
 			// set new editing index
 			this.editingFieldIndex = index;
 			// copy value for reset functional
@@ -99,6 +109,8 @@ export default {
 			this.$dialog
 				.confirm('Are you sure you want to detele field ?', Config.confirmModal)
 				.then(() => {
+					// copy contact before changes
+					this.copyContactToMemory();
 					// delete reactive
 					this.contact.fields.splice(index, 1);
 					this.save();
@@ -122,6 +134,9 @@ export default {
 			this.clearEditIndex();
 		},
 		createField(field) {
+			// copy contact before changes
+			this.copyContactToMemory();
+
 			const pField = {
 				name: field[0],
 				value: field[1],
@@ -129,15 +144,17 @@ export default {
 			this.contact.fields.push(pField);
 			this.save();
 		},
+		copyContactToMemory() {
+			// copy without reactivity
+			this.resetContact = JSON.parse(JSON.stringify(this.contact));
+		},
 		resetLastChange() {
-			console.log('reset last change');
-			// храним последнее измененное поле, позицию и значение
-			// при добавлении нового поля, записываем его реактивно в
-			// реактивно записываем его через contacts.fields = current fields+
+			if (!this.resetContact) return false;
 
-			// main reset, при каждом действии, сохраняем весь контакт, а потом при клике на кнопку, востанавливаем его
-
-			// в функции save делаем сохранение промежуточного состояния ???
+			this.contact = this.resetContact;
+			// clear memory
+			this.resetContact = false;
+			this.save();
 		},
 	},
 };

@@ -5,6 +5,7 @@
 		<div class="but-add" title="add field" @click="$emit('add-field')" />
 
 		<div
+			:class="{hide: !showResetButton}"
 			class="but-reset"
 			title="reset last change"
 			@click="$emit('reset-last-change')"
@@ -13,7 +14,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+	props: ['showResetButton'],
+};
 </script>
 
 <style>
@@ -42,7 +45,9 @@ export default {};
 	background-size: 15px;
 	cursor: pointer;
 }
-
+.but-reset.hide {
+	opacity: 0;
+}
 .buttons > *:hover {
 	background-color: hsl(0deg 0% 1% / 16%);
 }
