@@ -60,7 +60,7 @@ export default {
 		remove(contact) {
 			this.$dialog
 				.confirm(
-					'Are you sure you want to delete this contact',
+					'Are you sure you want to delete this contact ?',
 					Config.confirmModal
 				)
 				.then(() => {

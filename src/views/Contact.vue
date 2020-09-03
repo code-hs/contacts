@@ -79,7 +79,18 @@ export default {
 			});
 		},
 		remove(index) {
-			console.log('index :>> ', index);
+			// if empty field or field required
+			if (!this.contact.fields[index] || this.contact.fields[index].required)
+				return false;
+
+			this.$dialog
+				.confirm('Are you sure you want to detele field ?', Config.confirmModal)
+				.then(() => {
+					// delete reactive
+					this.contact.fields.splice(index, 1);
+					this.save();
+				})
+				.catch();
 		},
 		save() {
 			this.sSaveContact(this.contact);
@@ -90,13 +101,11 @@ export default {
 		},
 		reset(index) {
 			this.$dialog
-				.confirm('Are you sure you want to reset', Config.confirmModal)
+				.confirm('Are you sure you want to reset ?', Config.confirmModal)
 				.then(() => {
 					this.contact.fields[index].value = this.resetValue;
 				})
-				.catch(() => {
-					console.log('Clicked on cancel');
-				});
+				.catch();
 			this.clearEditIndex();
 
 			// храним последнее измененное поле, позицию и значение
@@ -104,6 +113,8 @@ export default {
 			// реактивно записываем его через contacts.fields = current fields+
 
 			// main reset, при каждом действии, сохраняем весь контакт, а потом при клике на кнопку, востанавливаем его
+
+			// в функции save делаем сохранение промежуточного состояния ???
 		},
 	},
 };

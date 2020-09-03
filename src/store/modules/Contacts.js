@@ -13,7 +13,6 @@ const state = {
 				{
 					name: 'email',
 					value: 'jon-snow@gmail.com',
-					required: false,
 				},
 			],
 		},
@@ -28,7 +27,6 @@ const state = {
 				{
 					name: 'email',
 					value: 'ella-gray@gmail.com',
-					required: false,
 				},
 			],
 		},
@@ -43,7 +41,6 @@ const state = {
 				{
 					name: 'email',
 					value: 'madison-rock@gmail.com',
-					required: false,
 				},
 			],
 		},
@@ -58,7 +55,6 @@ const state = {
 				{
 					name: 'email',
 					value: 'grayson-carter@gmail.com',
-					required: false,
 				},
 			],
 		},
